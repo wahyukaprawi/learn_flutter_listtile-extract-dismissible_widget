@@ -1,3 +1,4 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
 main() {
@@ -5,7 +6,7 @@ main() {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  var faker = new Faker();
 
   @override
   Widget build(BuildContext context) {
@@ -15,50 +16,45 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Learn List Tile Widget'),
         ),
-        body: ListView(
-          children: [
-            ListTile(
-              title: Text('Pung Anto'),
-              subtitle: Text('bisa kirimkan uang?'),
-              leading: CircleAvatar(),
-              trailing: Text('20.51'),
-              onTap: () {
-                return;
-              },
-            ),
-            ListTile(
-              title: Text('Fadel Mentemas'),
-              subtitle: Text('kmri jo'),
-              leading: CircleAvatar(),
-              trailing: Text('20.21'),
-              onTap: () {
-                return;
-              },
-            ),
-            ListTile(
-              title: Text('Alamsyah'),
-              subtitle: Text('tmn akan kta k kampus uti beso'),
-              leading: CircleAvatar(),
-              trailing: Text('18.40'),
-              onTap: () {
-                return;
-              },
-            ),
-            ListTile(
-              title: Text('Pak Arif Dwinanto'),
-              subtitle: Text('Assalamualaikum, Wr. Wb., Maaf menggangu waktunya pak saya Muhammad Aidil Wahyudi Kaprawi',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              ),
-              leading: CircleAvatar(),
-              trailing: Text('18.26'),
-              onTap: () {
-                return;
-              },
-            ),
-          ],
+        body: ListView.builder(
+          itemCount: 15,
+          itemBuilder: (context, index) {
+            return ListItem(
+              imagesurl: "https://picsum.photos/id/$index/200/300",
+              title:  faker.person.name(),
+              subtitle: faker.lorem.sentence(),
+            );
+          },
         )
       )
+    );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  final String imagesurl;
+  final String title;
+  final String subtitle;
+  
+  ListItem({
+    required this.imagesurl, required this.title, required this.subtitle
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(imagesurl),
+      ),
+      title: Text(title),
+      subtitle: Text(subtitle,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      ),
+      trailing: Text('18.00 PM'),
+      onTap: () {
+        return;
+      },
     );
   }
 }
